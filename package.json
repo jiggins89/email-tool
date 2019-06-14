@@ -9,7 +9,6 @@
   },
   "scripts": {
     "start": "node index.js",
-    // npm run dev - so that we don't have to restart the server
     "dev": "nodemon index.js"
   },
   "author": "",
