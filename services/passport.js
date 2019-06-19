@@ -23,21 +23,19 @@ passport.use(
       callbackURL: "/auth/google/callback",
       proxy: true
     },
-    (accessToken, refreshToken, profile, done) => {
-      // console.log("this working?", profile);
-      User.findOne({ googleId: profile.id }).then(existingUser => {
-        if (existingUser) {
-          // null means no issues, then tell who the user is
-          done(null, existingUser);
-        } else {
-          // create new user
-          new User({ googleId: profile.id, email: profile._json.email })
-            // saves new user to the db if they don't exist already
-            .save()
-            // returns promise which is the saved user
-            .then(user => done(null, user));
-        }
-      });
+    async (accessToken, refreshToken, profile, done) => {
+      const existingUser = await User.findOne({ googleId: profile.id });
+
+      // we already have this user we call done, null means no issues
+      if (existingUser) {
+        return done(null, existingUser);
+      }
+
+      // create new user and save to the db
+      const user = await new User({
+        googleId: profile.id,
+        email: profile._json.email
+      }).save();
     }
   )
 );
