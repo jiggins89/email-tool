@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 class Header extends React.Component {
   renderContent() {
@@ -14,31 +15,28 @@ class Header extends React.Component {
         );
       default:
         return (
-          // (
-          //   <li>
-          //     <a href="/surveys">Dashboard</a>
-          //   </li>
-          // ),
-          // (
-          //   <li>
-          //     <a href="/surveys/new">New</a>
-          //   </li>
-          // ),
-          <li>
-            <a href="/api/logout">Logout</a>
-          </li>
+          <ul>
+            <li>User Email: {this.props.auth.email}</li>
+            <li>
+              <a href="/api/logout">Logout</a>
+            </li>
+          </ul>
         );
     }
   }
 
   render() {
-    console.log(this.props);
+    console.log(this.props.auth);
     return (
       <nav>
         <div className="nav-wrapper">
-          <a href="/" className="left brand-logo">
+          <Link
+            to={this.props.auth ? "/surveys" : "/"}
+            href="/"
+            className="left brand-logo"
+          >
             Logo
-          </a>
+          </Link>
           <ul className="right">{this.renderContent()}</ul>
         </div>
       </nav>
