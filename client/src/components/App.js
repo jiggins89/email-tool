@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import * as actions from "../actions";
 // Component imports
 import Header from "./Header";
+import HomePage from "./HomePage";
 
 const Dashboard = () => <h2>Dashboard</h2>;
 const SurveyNew = () => <h2>SurveyNew</h2>;
@@ -12,6 +13,7 @@ const Landing = () => <h2>Home Page (Landing)</h2>;
 
 class App extends React.Component {
   componentDidMount() {
+    //  pulls the current user from the api
     this.props.fetchUser();
   }
 
@@ -21,7 +23,7 @@ class App extends React.Component {
         <BrowserRouter>
           <div>
             <Header />
-            <Route exact path="/" component={Landing} />
+            <Route exact path="/" component={HomePage} />
             <Route exact path="/surveys" component={Dashboard} />
             <Route path="/surveys/new" component={SurveyNew} />
           </div>
